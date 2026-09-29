@@ -9,12 +9,12 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] private Canvas worldCanvas;
-    [SerializeField] private GameObject selectionPrefab;
+    [SerializeField] private GameObject optionWindowPrefab;
 
     private Building currentBuilding;
     private float currentMoveAmount;
 
-    private GameObject selectionScreen;
+    private GameObject optionWindowObj;
 
     private void OnEnable() => fireAction.action.Enable();
     private void OnDisable() => fireAction.action.Disable();
@@ -35,39 +35,45 @@ public class GameManager : MonoBehaviour
     {
         if (currentBuilding == null)
         {
-            
             currentBuilding = building;
             DisplayMoveOptions(building.gameObject);
-
         } 
         else if (currentBuilding == building)
         {
-            
+            currentBuilding = null;
+            HideMoveOptions();
         } 
         else
         {
-            
+            currentBuilding.MoveBees(currentMoveAmount, building);
+            currentBuilding = null;
         }
     }
 
     private void DisplayMoveOptions(GameObject buildingObj)
     {
-        GameObject selections = Instantiate(selectionPrefab, buildingObj.transform.position, Quaternion.identity, worldCanvas.transform);
+        optionWindowObj = Instantiate(optionWindowPrefab, buildingObj.transform.position, Quaternion.identity, worldCanvas.transform);
 
-        
+        if (optionWindowObj.TryGetComponent(out OptionWindow optionWindow))
+        {
+            optionWindow.SetupOptions(SelectMoveOption);
+        }
     }
 
     private void HideMoveOptions()
     {
-        if (selectionScreen != null)
+        if (optionWindowObj != null)
         {
-            Destroy(selectionScreen);
+            Destroy(optionWindowObj);
         }
     }
 
     public void SelectMoveOption(float choice)
     {
+        Debug.Log(choice);
         currentMoveAmount = choice;
+
+        HideMoveOptions();
     }
 
     private void OnFirePerformed(InputAction.CallbackContext context)
@@ -79,7 +85,6 @@ public class GameManager : MonoBehaviour
     void ShootRaycastFromCenter()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Debug.Log(mousePosition);
 
         // 4. Turn that screen position into a 3D Ray
         Vector2 worldPoint = mainCamera.ScreenToWorldPoint(mousePosition);
