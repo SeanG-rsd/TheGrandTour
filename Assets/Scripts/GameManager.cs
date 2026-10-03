@@ -21,9 +21,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         fireAction.action.performed += OnFirePerformed;
-
-        capital.StartGame();
-
     }
 
     private void OnDestroy()
@@ -96,7 +93,9 @@ public class GameManager : MonoBehaviour
 
             if (hit.TryGetComponent(out Building building))
             {
-                SelectBuilding(building);
+                if (building.built) {
+                    SelectBuilding(building);
+                }
             }
         }
     }

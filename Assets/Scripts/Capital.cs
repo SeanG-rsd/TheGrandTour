@@ -10,7 +10,7 @@ public class Capital : Building
     {
         if (!this.gameStart) return;
 
-        if (timeUntilNextBee < 0)
+        if (timeUntilNextBee < 0 && beeCount < this.maxBeeCapacity)
         {
             this.AddBee();
             timeUntilNextBee = beeRate;
