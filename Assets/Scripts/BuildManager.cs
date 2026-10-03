@@ -66,7 +66,12 @@ public class BuildManager : MonoBehaviour
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Vector2 worldPoint = mainCamera.ScreenToWorldPoint(mousePosition);
 
-        currentPointerPosition = tilemap.WorldToCell(worldPoint);
+        Vector3Int check = tilemap.WorldToCell(worldPoint);
+
+        // make sure we're building on a valid tile
+        if (!tilemap.HasTile(check)) return;
+
+        currentPointerPosition = check;
 
         Vector3 pos = tilemap.CellToWorld(currentPointerPosition);
         selectionIndicator.transform.position = pos;
