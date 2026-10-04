@@ -4,19 +4,19 @@ using UnityEngine;
 public class Capital : Building
 {
     [SerializeField] private float beeRate;
-    private float timeUntilNextBee;
+    private float timeUntilNextBeeMade;
 
     private void FixedUpdate()
     {
         if (!this.gameStart) return;
 
-        if (timeUntilNextBee < 0 && beeCount < this.maxBeeCapacity)
+        if (timeUntilNextBeeMade < 0 && beeCount < this.maxBeeCapacity)
         {
             this.AddBee();
-            timeUntilNextBee = beeRate;
+            timeUntilNextBeeMade = beeRate;
         } else
         {
-            timeUntilNextBee -= Time.fixedDeltaTime;
+            timeUntilNextBeeMade -= Time.fixedDeltaTime;
         }
     }
 }

@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
             if (hit.TryGetComponent(out Building building))
             {
-                if (building.built) {
+                if (building.Built) {
                     SelectBuilding(building);
                 }
             }
