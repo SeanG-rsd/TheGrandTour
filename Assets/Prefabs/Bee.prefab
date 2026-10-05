@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945f0025c18954242ac75bf7f3a041cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bee
-  moveSpeed: 0.5
+  moveSpeed: 0.6
   maxCurve: 0.3
   speedVariance: 0.15
   buzzAmplitude: 0.1
